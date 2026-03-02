@@ -6,5 +6,9 @@ namespace WarehouseManager.Commands
 {
     internal class UndoCommandInvoker
     {
+        public void Execute(IUndoCommand undoCommand, string[] args)
+        {
+            undoCommand.Execute(args);
+        }
     }
 }

@@ -14,24 +14,25 @@ namespace WarehouseManager.Application
             InputStringProvider inputStringProvider = new InputStringProvider();
             UndoCommandInvoker undoCommandInvoker = new UndoCommandInvoker();
             NotUndoCommandInvoker notUndoCommandInvoker = new NotUndoCommandInvoker();
-            
+
             while (true)
             {
                 string input = inputStringProvider.GetNextCommandString().ToLower();
 
-                Log.Information("Received input: {Input}", input);
 
-                if (input == "")
+                string[] inputSplited = input.Split(" ");
+                switch (inputSplited[0])
                 {
-                    Log.Error("An error occurred while processing input: {Input}", input);
-                }
-                switch (input.ToLower().Split(" ")[0])
-                {
+                    case "additem":
+                        undoCommandInvoker.Execute(new AddNewItemCommand(), inputSplited.Skip(1).ToArray());
+                        break;
+                    case "addstock":
+
                     case "exit":
                         Log.Information("Exiting application.");
                         return;
                     case "help":
-                        notUndoCommandInvoker.Execute(new HelpCommand(),input.Split(" "));
+                        notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));
                         break;
                     case "add":
                         Log.Information("Add command received with arguments:" + input);
@@ -57,8 +58,8 @@ namespace WarehouseManager.Application
                         Log.Warning("Unknown command: {Input}", input);
                         break;
                 }
+                //}
             }
-
         }
         public void ShowWelcome()
         {
