@@ -18,44 +18,39 @@ namespace WarehouseManager.Application
             while (true)
             {
                 string input = inputStringProvider.GetNextCommandString().ToLower();
-                Log.Information("Received input: {Input}", input);
 
                 if (input == "")
                 {
-                    Log.Error("An error occurred while processing input: {Input}", input);
+                    Log.Error("Input can't be empty");
                 }
                 else
                 {
                     string[] inputSplited = input.Split(" ");
-                    switch (inputSplited[0])
+                    string inputToComper = inputSplited[0];
+                    string[] args = inputSplited.Skip(1).ToArray();
+
+                    switch (inputToComper)
                     {
                         case "additem":
-                            Log.Information("Add command received with arguments:" + input);
-                            undoCommandInvoker.Execute(new AddNewItemCommand(), inputSplited.Skip(1).ToArray());
+                            undoCommandInvoker.Execute(new AddNewItemCommand(), args);
                             break;
                         case "addstock":
-                            undoCommandInvoker.Execute(new AddStockCommand(), inputSplited.Skip(1).ToArray()); 
+                            undoCommandInvoker.Execute(new AddStockCommand(), args); 
                             break;
                         case "removestock":
-                            undoCommandInvoker.Execute(new RemoveStockCommand(), inputSplited.Skip(1).ToArray());
+                            undoCommandInvoker.Execute(new RemoveStockCommand(), args);
+                            break;
+                        case "undo":
+                            notUndoCommandInvoker.Execute(new UndoCommand(), args);
                             break;
                         case "link":
-                            notUndoCommandInvoker.Execute(new LinkToFileCommand(), inputSplited.Skip(1).ToArray());
+                            notUndoCommandInvoker.Execute(new LinkToFileCommand(), args);
                             break;
                         case "list":
-                            notUndoCommandInvoker.Execute(new ListWarehouseCommand(), inputSplited.Skip(1).ToArray());
+                            notUndoCommandInvoker.Execute(new ListWarehouseCommand(), args);
                             break;
                         case "query":
-                            try
-                            {
-                                //commandInvoker.ExecuteCommand(new QueryCommandF(), input.Split(" "));
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Information("Error run the Query: " + ex.Message);
-                            }
-
-                            Log.Information($"q {input}");
+                            notUndoCommandInvoker.Execute(new QueryCommand(), args);
                             break;
                         case "help":
                             notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));

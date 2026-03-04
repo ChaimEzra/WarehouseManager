@@ -26,7 +26,6 @@ namespace WarehouseManager.Application
             finally
             {
                 Log.CloseAndFlush();
-
             }
         }
         //public static void Main(string[] args)

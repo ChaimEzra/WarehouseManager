@@ -4,7 +4,11 @@ using System.Text;
 
 namespace WarehouseManager.Commands
 {
-    internal class QueryCommand
+    internal class QueryCommand : INotUndoCommand
     {
+        public void Execute(string[] args)
+        {
+            Console.WriteLine("Query");
+        }
     }
 }

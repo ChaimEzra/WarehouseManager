@@ -8,6 +8,6 @@ namespace WarehouseManager.WarehouseFolder
     {
         Edible,
         Needscooling,
-        Fragile
+        fragile
     }
 }

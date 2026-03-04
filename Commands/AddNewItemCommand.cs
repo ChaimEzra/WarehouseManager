@@ -46,11 +46,12 @@ namespace WarehouseManager.Commands
                 //}
                 //items.Add(newItem);
                 Warehouse.GetWarehouse().AddnewItem(new Item(opts.Name, opts.Price,itemProperties));
+                Log.Information("New Item Added to the warehouse");
             });
             //HashSet <ItemProperty> items = new HashSet<ItemProperty>();
             //items.Add(ItemProperty.fragile);
             //Warehouse.GetInstance().AddProduct(new Item(args[1], 22 ,items));
-            Log.Information("New Item Added to the warehouse");
+            
             //Console.WriteLine("Add item.");
         }
         public void Undo()
