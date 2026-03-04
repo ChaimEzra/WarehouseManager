@@ -4,7 +4,11 @@ using System.Text;
 
 namespace WarehouseManager.InputTyps
 {
-    internal class InputByFile
+    internal class InputByFile : IInputStringGetter
     {
+        public string GetInputString()
+        {
+            return "";
+        }
     }
 }
