@@ -6,9 +6,19 @@ namespace WarehouseManager.Commands
 {
     internal class UndoCommandInvoker
     {
+        private Stack<IUndoCommand> UndoCommands = new Stack<IUndoCommand>();
         public void Execute(IUndoCommand undoCommand, string[] args)
         {
             undoCommand.Execute(args);
+            UndoCommands.Push(undoCommand);
+        }
+        public void Undo()
+        {
+            if (UndoCommands.Count > 0)
+            {
+                IUndoCommand undoCommand = UndoCommands.Pop();
+                undoCommand.Undo();
+            }
         }
     }
 }

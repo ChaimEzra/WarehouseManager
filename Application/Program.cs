@@ -6,6 +6,7 @@ namespace WarehouseManager.Application
     {
         public static void Main(string[] args)
         {
+            EventMessageService eventMessageService = new EventMessageService(Warehouse.GetWarehouse());
             Log.Logger = new LoggerConfiguration()
                  .MinimumLevel.Debug()
                  .WriteTo.Console()
@@ -30,16 +31,12 @@ namespace WarehouseManager.Application
         }
         //public static void Main(string[] args)
         //{
-        //    Warehouse w = Warehouse.GetWarehouse();
-        //    var item = new Item("a", 5.5, new HashSet<ItemProperty>(new[] { ItemProperty.Fragile, ItemProperty.Needscooling }));
-        //    w.AddnewItem(item);
-        //    w.AddnewItem(new Item("b", 5, new HashSet<ItemProperty>(new[] { ItemProperty.Fragile, ItemProperty.Needscooling })));
-        //    w.AddnewItem(new Item("c", 50, new HashSet<ItemProperty>(new[] { ItemProperty.Fragile, ItemProperty.Edible })));
-        //    w.AddnewItem(new Item("r", 55, new HashSet<ItemProperty>(new[] { ItemProperty.Fragile })));
-
-        //    w.AddStock(item.Id + -1, 2000000000);
-        //    w.PrintWarehouse();
-
+        //    while (true)
+        //    {
+        //        int choice = int.Parse(Console.ReadLine());
+        //        int n =  WarehousSettings.LoadThreshold();
+        //        Console.WriteLine($"You choice {choice} + trashholde {n} = {choice + n}");
+        //    }
         //}
     }
 }
