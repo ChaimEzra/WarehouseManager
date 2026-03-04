@@ -7,5 +7,6 @@ namespace WarehouseManager.Commands
     internal interface IUndoCommand
     {
         void Execute(string[] args);
+        void Undo();
     }
 }

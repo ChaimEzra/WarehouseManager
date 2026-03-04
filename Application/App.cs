@@ -18,47 +18,58 @@ namespace WarehouseManager.Application
             while (true)
             {
                 string input = inputStringProvider.GetNextCommandString().ToLower();
+                Log.Information("Received input: {Input}", input);
 
-
-                string[] inputSplited = input.Split(" ");
-                switch (inputSplited[0])
+                if (input == "")
                 {
-                    case "additem":
-                        undoCommandInvoker.Execute(new AddNewItemCommand(), inputSplited.Skip(1).ToArray());
-                        break;
-                    case "addstock":
-
-                    case "exit":
-                        Log.Information("Exiting application.");
-                        return;
-                    case "help":
-                        notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));
-                        break;
-                    case "add":
-                        Log.Information("Add command received with arguments:" + input);
-                        //commandInvoker.ExecuteCommand(new AddItemCommand(), input.Split(" "));
-                        break;
-                    case "q":
-                        try
-                        {
-                            //commandInvoker.ExecuteCommand(new QueryCommandF(), input.Split(" "));
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Information("Error run the Query: " + ex.Message);
-                        }
-
-                        Log.Information($"q {input}");
-                        break;
-                    case "p":
-                        Log.Information("Printing the warehouse.");
-                        //commandInvoker.ExecuteCommand(new ListWarehouseCommand(), input.Split(" "));
-                        break;
-                    default:
-                        Log.Warning("Unknown command: {Input}", input);
-                        break;
+                    Log.Error("An error occurred while processing input: {Input}", input);
                 }
-                //}
+                else
+                {
+                    string[] inputSplited = input.Split(" ");
+                    switch (inputSplited[0])
+                    {
+                        case "additem":
+                            Log.Information("Add command received with arguments:" + input);
+                            undoCommandInvoker.Execute(new AddNewItemCommand(), inputSplited.Skip(1).ToArray());
+                            break;
+                        case "addstock":
+                            undoCommandInvoker.Execute(new AddStockCommand(), inputSplited.Skip(1).ToArray()); 
+                            break;
+                        case "removestock":
+                            undoCommandInvoker.Execute(new RemoveStockCommand(), inputSplited.Skip(1).ToArray());
+                            break;
+                        case "link":
+                            notUndoCommandInvoker.Execute(new LinkToFileCommand(), inputSplited.Skip(1).ToArray());
+                            break;
+                        case "list":
+                            Log.Information("Printing the warehouse.");
+                            notUndoCommandInvoker.Execute(new ListWarehouseCommand(), inputSplited.Skip(1).ToArray());
+                            break;
+                        case "q":
+                            try
+                            {
+                                //commandInvoker.ExecuteCommand(new QueryCommandF(), input.Split(" "));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Information("Error run the Query: " + ex.Message);
+                            }
+
+                            Log.Information($"q {input}");
+                            break;
+                       
+                        case "help":
+                            notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));
+                            break;
+                        case "exit":
+                            Log.Information("Exiting application.");
+                            return;
+                        default:
+                            Log.Warning("Unknown command: {Input}", input);
+                            break;
+                    }
+                }
             }
         }
         public void ShowWelcome()
