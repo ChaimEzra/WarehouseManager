@@ -15,9 +15,9 @@ namespace WarehouseManager.Commands
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("========== AVAILABLE COMMANDS ==========\n");
 
-            Console.WriteLine("AddItem -n <Name> -p <Price> -t <Property1,Property2,Property3>");
+            Console.WriteLine("AddItem -n <Name> -p <Price> -t <Edible,Needscooling,Fragile>");
             Console.WriteLine("    Adds a new item to the warehouse.");
-            Console.WriteLine("    Example: AddItem -n Apple -p 5.5 -t Fragile,Heavy\n");
+            Console.WriteLine("    Example: AddItem -n Apple -p 5.5 -t Fragile,Needscooling\n");
         
             Console.WriteLine("AddStock -i <ItemId> -q <Quantity>");
             Console.WriteLine("    Increases stock of an existing item.");
