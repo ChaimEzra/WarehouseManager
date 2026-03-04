@@ -25,9 +25,8 @@ namespace WarehouseManager.Application
                 }
                 else
                 {
-                    string[] inputSplited = input.Split(" ");
-                    string inputToComper = inputSplited[0];
-                    string[] args = inputSplited.Skip(1).ToArray();
+                    string inputToComper = input.Split(" ")[0];
+                    string[] args = input.Split(" ").Skip(1).ToArray();
 
                     switch (inputToComper)
                     {

@@ -6,8 +6,8 @@ namespace WarehouseManager.WarehouseFolder
 {
     internal enum ItemProperty
     {
-        Edible,
-        Needscooling,
+        edible,
+        needscooling,
         fragile
     }
 }
