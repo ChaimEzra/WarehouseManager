@@ -35,8 +35,9 @@ namespace WarehouseManager.Commands
                     }
                 }
                 //var newItem = new Item(opts.Name, opts.Price, opts.Traits);
-                
-                //if (opts.Traits != null)
+
+                //if (opts.Traits != null)//fdfdf
+
                 //{
                 //    foreach (var trait in opts.Traits)
                 //    {
