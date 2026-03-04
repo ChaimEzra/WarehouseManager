@@ -24,13 +24,13 @@ namespace WarehouseManager.WarehouseFolder
         public void AddStock(int id, int quantity)
         {
             var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
-            if ( item != null && quantity > 0)
+            if ( item != null )
             {
                 this.ItemsInWarehouse[item] += quantity;
+                Log.Information($"The quantity {quantity} was successfuly added to item id {id}");
             }else
             {
-                Console.WriteLine("Item Not found");
-                Log.Error("Id or Quantity are not valid. Try again");
+                Log.Error("Item Not found! Id is not valid. Try again");
             }
         }
         public void PrintWarehouse()
