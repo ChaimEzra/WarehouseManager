@@ -43,10 +43,9 @@ namespace WarehouseManager.Application
                             notUndoCommandInvoker.Execute(new LinkToFileCommand(), inputSplited.Skip(1).ToArray());
                             break;
                         case "list":
-                            Log.Information("Printing the warehouse.");
                             notUndoCommandInvoker.Execute(new ListWarehouseCommand(), inputSplited.Skip(1).ToArray());
                             break;
-                        case "q":
+                        case "query":
                             try
                             {
                                 //commandInvoker.ExecuteCommand(new QueryCommandF(), input.Split(" "));
@@ -58,7 +57,6 @@ namespace WarehouseManager.Application
 
                             Log.Information($"q {input}");
                             break;
-                       
                         case "help":
                             notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));
                             break;
@@ -66,7 +64,7 @@ namespace WarehouseManager.Application
                             Log.Information("Exiting application.");
                             return;
                         default:
-                            Log.Warning("Unknown command: {Input}", input);
+                            Log.Warning($"Unknown command: {input}");
                             break;
                     }
                 }

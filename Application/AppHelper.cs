@@ -6,6 +6,6 @@ namespace WarehouseManager.Application
 {
     internal class AppHelper
     {
-        
+        public void Persist() { }
     }
 }
