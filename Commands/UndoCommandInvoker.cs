@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,6 +19,9 @@ namespace WarehouseManager.Commands
             {
                 IUndoCommand undoCommand = UndoCommands.Pop();
                 undoCommand.Undo();
+            }else
+            {
+                Log.Information("No commands to undo.");
             }
         }
     }

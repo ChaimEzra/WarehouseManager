@@ -2,6 +2,7 @@
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using WarehouseManager.WarehouseFolder;
 
@@ -16,7 +17,7 @@ namespace WarehouseManager.Commands
         public double Price { get; set; }
 
         [Option('t', "traits", Required = false, Separator = ',', HelpText = "Proprtyes to enter if true")]
-        public IEnumerable<ItemProperty> ? Traits { get; set; }
+        public IEnumerable<string>? Traits { get; set; } = new List<string>();
 
         public void Execute(string[] args)
         {
@@ -28,7 +29,14 @@ namespace WarehouseManager.Commands
                 {
                     foreach (var trait in opts.Traits)
                     {
-                        itemProperties.Add(trait);
+                        if (Enum.TryParse<ItemProperty>(trait, ignoreCase: true, out ItemProperty result))
+                        {
+                            itemProperties.Add(result);
+                        }else
+                        {
+                            Log.Error($"Invalid trait: {trait}. Skipping.");
+                            return;
+                        }
                     }
                 }
                 

@@ -9,26 +9,29 @@ namespace WarehouseManager.WarehouseFolder
     internal class Warehouse
     {
         private static Warehouse warehouse;
-        public Dictionary<Item, int> ItemsInWarehouse { get; private set; } = new Dictionary<Item, int>();
-        private Warehouse() 
+        public event EventHandler<LowStockEventArgs>? LowStock;
+        public Dictionary<Item, int> ItemsInWarehouse { get; private set; }
+        
+        private Warehouse()
         {
-          
+            ItemsInWarehouse = new Dictionary<Item, int>();
         }
-       
         public static Warehouse GetWarehouse()
         {
             if (warehouse is null)
             {
                 warehouse = new Warehouse();
-                //warehouse.LowStock += OnLowStock;
+                
             }
             return warehouse;
         }
+
         public void AddnewItem(Item item)
         {
             ItemsInWarehouse.Add(item, WarehousSettings.LoadThreshold());
-            UpdateQuantity(item);
+            UpdateQuantity(item.Id);
         }
+
         public void AddStock(int id, int quantity)
         {
             var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
@@ -36,13 +39,14 @@ namespace WarehouseManager.WarehouseFolder
             {
                 this.ItemsInWarehouse[item] += quantity;
                 Log.Information($"The quantity {quantity} was successfuly added to item id {id}");
-                UpdateQuantity(item);
+                UpdateQuantity(item.Id);
             }
             else
             {
                 Log.Error("Item Not found! Id is not valid. Try again");
             }
         }
+
         public void RemoveStock(int id, int quantity)
         {
             var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
@@ -54,14 +58,15 @@ namespace WarehouseManager.WarehouseFolder
                     return;
                 }
                 this.ItemsInWarehouse[item] -= quantity;
-                UpdateQuantity(item);
-                Log.Information($"The quantity {quantity} was successfuly added to item id {id}");
+                Log.Information($"The quantity {quantity} was successfuly removed from item id {id}");
+                UpdateQuantity(item.Id);
             }
             else
             {
                 Log.Error("Item Not found! Id is not valid. Try again");
             }
         }
+
         public void PrintWarehouse()
         {  
             foreach (var item in this.ItemsInWarehouse)
@@ -69,12 +74,15 @@ namespace WarehouseManager.WarehouseFolder
                 Console.WriteLine($"[Item: {item.Key} - Quantity: {item.Value}]");
             }
         }
-        public event EventHandler<LowStockEventArgs>? LowStock;
 
-        public void UpdateQuantity(Item item)
+        public void UpdateQuantity(int id)
         {
-            if (!ItemsInWarehouse.ContainsKey(item))
-                throw new Exception("Item not found");
+            var item = ItemsInWarehouse.Select(i => i.Key).FirstOrDefault(i => i.Id == id);
+
+            if(item is null)
+            {
+                return;
+            }
 
             int newQuantity = ItemsInWarehouse[item];
 

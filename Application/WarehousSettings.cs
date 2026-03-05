@@ -19,7 +19,7 @@ namespace WarehouseManager.Application
         }
         public static int LoadThreshold()
         {
-            string json = File.ReadAllText("C:\\Users\\chaim\\Desktop\\C#\\WarehouseManager\\appsettings.json");
+            string json = File.ReadAllText("C:\\Users\\chaim\\Desktop\\C#\\WarehouseManager\\appthreshold.json");
 
             var doc = JsonDocument.Parse(json);
 

@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Configuration;
+using Serilog;
 using WarehouseManager.WarehouseFolder;
 namespace WarehouseManager.Application
 {
@@ -7,11 +8,15 @@ namespace WarehouseManager.Application
         public static void Main(string[] args)
         {
             EventMessageService eventMessageService = new EventMessageService(Warehouse.GetWarehouse());
+
+            var configuration = new ConfigurationBuilder()
+                    .AddJsonFile("C:\\Users\\chaim\\Desktop\\C#\\WarehouseManager\\appsettings.json", optional: false, reloadOnChange: true)
+                    .Build();
+
             Log.Logger = new LoggerConfiguration()
-                 .MinimumLevel.Debug()
-                 .WriteTo.Console()
-                 .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-                 .CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
             try
             {
                 Log.Information("Starting application");

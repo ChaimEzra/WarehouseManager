@@ -52,9 +52,10 @@ namespace WarehouseManager.Application
                             notUndoCommandInvoker.Execute(new QueryCommand(), args);
                             break;
                         case "help":
-                            notUndoCommandInvoker.Execute(new HelpCommand(), input.Split(" "));
+                            notUndoCommandInvoker.Execute(new HelpCommand(), args);
                             break;
                         case "exit":
+                            notUndoCommandInvoker.Execute(new ExitCommand(), args);
                             Log.Information("Exiting application.");
                             return;
                         default:

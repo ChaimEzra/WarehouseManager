@@ -4,7 +4,11 @@ using System.Text;
 
 namespace WarehouseManager.Commands
 {
-    internal class ExitCommand
+    internal class ExitCommand : INotUndoCommand
     {
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
