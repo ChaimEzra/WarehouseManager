@@ -22,8 +22,6 @@ namespace WarehouseManager.QueryFolder
         {
             var orGroups = queryTypeString.Split("||");
 
-            //var conditions = queryTypeString.Split("&&");
-
             return (items) =>
             {
                 return items.Where(item =>
@@ -50,8 +48,7 @@ namespace WarehouseManager.QueryFolder
                     return false;
                 });
             };
-            Console.WriteLine("Where Query: " + queryTypeString);
-            return items => items;
+            //return items => items;
         }
         private bool EvaluateCondition(Item item, string condition)
         {
@@ -73,7 +70,6 @@ namespace WarehouseManager.QueryFolder
                 }
             }
 
-            // אם אין אופרטור → כנראה Enum בתוך HashSet
             return CheckEnumProperty(item, condition);
         }
         private bool Compare(object itemValue, string rightSide, string op)

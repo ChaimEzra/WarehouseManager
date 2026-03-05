@@ -6,7 +6,7 @@ namespace WarehouseManager.WarehouseFolder
 {
     internal class Item
     {
-        private static int CounterId { get; set; } 
+        private static int CounterId { get; set; } = 0;
         public int Id { get; }
         public string Name { get; set; }
         public double Price { get; set; }
