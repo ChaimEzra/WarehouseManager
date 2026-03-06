@@ -31,6 +31,15 @@ namespace WarehouseManager.WarehouseFolder
             ItemsInWarehouse.Add(item, WarehousSettings.LoadThreshold());
             UpdateQuantity(item.Id);
         }
+        public void RemoveItem(int id)
+        {
+            var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
+            if (item is not null)
+            {
+                ItemsInWarehouse.Remove(item);
+                Log.Information($"The item {item} was removed from warehouse.");
+            }
+        }
 
         public void AddStock(int id, int quantity)
         {
@@ -68,10 +77,17 @@ namespace WarehouseManager.WarehouseFolder
         }
 
         public void PrintWarehouse()
-        {  
-            foreach (var item in this.ItemsInWarehouse)
+        {
+            if (this.ItemsInWarehouse is not null)
             {
-                Console.WriteLine($"[Item: {item.Key} - Quantity: {item.Value}]");
+                Console.WriteLine("Wharehouse empty.");
+            }
+            else
+            {
+                foreach (var item in this.ItemsInWarehouse)
+                {
+                    Console.WriteLine($"[Item: {item.Key} - Quantity: {item.Value}]");
+                }
             }
         }
 

@@ -6,9 +6,26 @@ namespace WarehouseManager.InputTyps
 {
     internal class InputByFile : IInputStringGetter
     {
+        private StreamReader reader;
+
+        public InputByFile(string path)
+        {
+            reader = new StreamReader(path);
+        }
+
         public string GetInputString()
         {
-            return "";
+            if (reader.EndOfStream)
+            {
+                reader.Close();
+                return null;
+            }
+
+            return reader.ReadLine();
         }
+        //public string GetInputString()
+        //{
+        //    return "";
+        //}
     }
 }

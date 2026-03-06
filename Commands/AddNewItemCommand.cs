@@ -19,13 +19,15 @@ namespace WarehouseManager.Commands
         [Option('t', "traits", Required = false, Separator = ',', HelpText = "Proprtyes to enter if true")]
         public IEnumerable<string>? Traits { get; set; } = new List<string>();
 
+        private Item? CreatedItem { get; set; } 
+
         public void Execute(string[] args)
         {
             Parser.Default.ParseArguments<AddNewItemCommand>(args).WithParsed(opts =>
             {
                 HashSet<ItemProperty> itemProperties = new HashSet<ItemProperty>();
 
-                if (opts.Traits != null)
+                if (opts.Traits is not null)
                 {
                     foreach (var trait in opts.Traits)
                     {
@@ -39,15 +41,22 @@ namespace WarehouseManager.Commands
                         }
                     }
                 }
-                
-                Warehouse.GetWarehouse().AddnewItem(new Item(opts.Name, opts.Price,itemProperties));
+
+                CreatedItem = new Item(opts.Name, opts.Price, itemProperties);
+                Warehouse.GetWarehouse().AddnewItem(CreatedItem);
                 Log.Information("New Item Added to the warehouse");
             });
             
         }
         public void Undo()
         {
-            Console.WriteLine("Undoing");
+            if (CreatedItem is not null)
+            {
+                Warehouse.GetWarehouse().RemoveItem(CreatedItem.Id);
+            }else
+            {
+                Log.Information("No item created.");
+            }
         }
     }
 }

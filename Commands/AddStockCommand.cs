@@ -34,9 +34,13 @@ namespace WarehouseManager.Commands
             });
             
         }
-        public void Undo() 
+        public void Undo()
         {
-            Console.WriteLine("Undoing");
+            if (this.Id > 0)
+            {
+                Warehouse.GetWarehouse().RemoveStock(this.Id, this.Quantity);
+                Log.Information("Undoing add stock");
+            }
         }
     }
 }

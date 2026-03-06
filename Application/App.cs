@@ -40,10 +40,10 @@ namespace WarehouseManager.Application
                             undoCommandInvoker.Execute(new RemoveStockCommand(), args);
                             break;
                         case "undo":
-                            notUndoCommandInvoker.Execute(new UndoCommand(), args);
+                            notUndoCommandInvoker.Execute(new UndoCommand(undoCommandInvoker), args);
                             break;
                         case "link":
-                            notUndoCommandInvoker.Execute(new LinkToFileCommand(), args);
+                            notUndoCommandInvoker.Execute(new LinkToFileCommand(inputStringProvider), args);
                             break;
                         case "list":
                             notUndoCommandInvoker.Execute(new ListWarehouseCommand(), args);
