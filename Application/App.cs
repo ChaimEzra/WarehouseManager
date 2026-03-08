@@ -19,50 +19,44 @@ namespace WarehouseManager.Application
             {
                 string input = inputStringProvider.GetNextCommandString().ToLower();
 
-                if (input == "")
-                {
-                    Log.Error("Input can't be empty");
-                }
-                else
-                {
-                    string inputToComper = input.Split(" ")[0];
-                    string[] args = input.Split(" ").Skip(1).ToArray();
+                string inputToComper = input.Split(" ")[0];
+                string[] args = input.Split(" ").Skip(1).ToArray();
 
-                    switch (inputToComper)
-                    {
-                        case "additem":
-                            undoCommandInvoker.Execute(new AddNewItemCommand(), args);
-                            break;
-                        case "addstock":
-                            undoCommandInvoker.Execute(new AddStockCommand(), args); 
-                            break;
-                        case "removestock":
-                            undoCommandInvoker.Execute(new RemoveStockCommand(), args);
-                            break;
-                        case "undo":
-                            notUndoCommandInvoker.Execute(new UndoCommand(undoCommandInvoker), args);
-                            break;
-                        case "link":
-                            notUndoCommandInvoker.Execute(new LinkToFileCommand(inputStringProvider), args);
-                            break;
-                        case "list":
-                            notUndoCommandInvoker.Execute(new ListWarehouseCommand(), args);
-                            break;
-                        case "query":
-                            notUndoCommandInvoker.Execute(new QueryCommand(), args);
-                            break;
-                        case "help":
-                            notUndoCommandInvoker.Execute(new HelpCommand(), args);
-                            break;
-                        case "exit":
-                            notUndoCommandInvoker.Execute(new ExitCommand(), args);
-                            Log.Information("Exiting application.");
-                            return;
-                        default:
-                            Log.Warning($"Unknown command: {input}");
-                            break;
-                    }
+                switch (inputToComper)
+                {
+                    case "additem":
+                        undoCommandInvoker.Execute(new AddNewItemCommand(), args);
+                        break;
+                    case "addstock":
+                        undoCommandInvoker.Execute(new AddStockCommand(), args);
+                        break;
+                    case "removestock":
+                        undoCommandInvoker.Execute(new RemoveStockCommand(), args);
+                        break;
+                    case "undo":
+                        notUndoCommandInvoker.Execute(new UndoCommand(undoCommandInvoker), args);
+                        break;
+                    case "link":
+                        notUndoCommandInvoker.Execute(new LinkToFileCommand(inputStringProvider), args);
+                        break;
+                    case "list":
+                        notUndoCommandInvoker.Execute(new ListWarehouseCommand(), args);
+                        break;
+                    case "query":
+                        notUndoCommandInvoker.Execute(new QueryCommand(), args);
+                        break;
+                    case "help":
+                        notUndoCommandInvoker.Execute(new HelpCommand(), args);
+                        break;
+                    case "exit":
+                        notUndoCommandInvoker.Execute(new ExitCommand(), args);
+                        Log.Information("Exiting application.");
+                        return;
+                    default:
+                        Log.Warning($"Unknown command: {input}");
+                        break;
                 }
+
             }
         }
         public void ShowWelcome()

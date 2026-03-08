@@ -23,9 +23,6 @@ namespace WarehouseManager.InputTyps
 
             return reader.ReadLine();
         }
-        //public string GetInputString()
-        //{
-        //    return "";
-        //}
+   
     }
 }

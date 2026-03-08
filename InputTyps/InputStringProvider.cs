@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,23 +20,26 @@ namespace WarehouseManager.InputTyps
 
         public string GetNextCommandString()
         {
-            while (inputStack.Count > 0)
+            while (true)
             {
                 string command = inputStack.Peek().GetInputString();
 
-                if (command != null)
+                if (!string.IsNullOrWhiteSpace(command))
+                {
                     return command;
+                }
+               
 
-                inputStack.Pop();
+                if (command is null && inputStack.Count > 1)
+                {
+                    inputStack.Pop();
+                    continue;
+                }
+                if (command == "" && inputStack.Count <= 1)
+                {
+                    Log.Error("Input can't be empty");
+                }
             }
-
-            return "";
         }
-        //public string GetNextCommandString()
-        //{
-        //    InputByConsole input  = new InputByConsole();
-        //    return input.GetInputString();
-             
-        //}
     }
 }

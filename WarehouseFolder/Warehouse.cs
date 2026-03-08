@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using WarehouseManager.Application;
 
@@ -11,7 +12,7 @@ namespace WarehouseManager.WarehouseFolder
         private static Warehouse warehouse;
         public event EventHandler<LowStockEventArgs>? LowStock;
         public Dictionary<Item, int> ItemsInWarehouse { get; private set; }
-        
+
         private Warehouse()
         {
             ItemsInWarehouse = new Dictionary<Item, int>();
@@ -21,7 +22,6 @@ namespace WarehouseManager.WarehouseFolder
             if (warehouse is null)
             {
                 warehouse = new Warehouse();
-                
             }
             return warehouse;
         }
@@ -78,16 +78,17 @@ namespace WarehouseManager.WarehouseFolder
 
         public void PrintWarehouse()
         {
-            if (this.ItemsInWarehouse is not null)
-            {
-                Console.WriteLine("Wharehouse empty.");
-            }
-            else
+
+            if (this.ItemsInWarehouse.Count > 0)
             {
                 foreach (var item in this.ItemsInWarehouse)
                 {
                     Console.WriteLine($"[Item: {item.Key} - Quantity: {item.Value}]");
                 }
+            }
+            else
+            {
+                Log.Warning("Wharehouse empty.");
             }
         }
 
