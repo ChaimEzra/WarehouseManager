@@ -14,7 +14,7 @@ namespace WarehouseManager.Commands
         [Option('p', "path", Required = true, HelpText = "Full path to the file commands.")]
         public string? Path { get; set; }
 
-        private InputStringProvider? provider;
+        private InputStringProvider provider;
 
         public LinkToFileCommand() { }
         public LinkToFileCommand(InputStringProvider provider)

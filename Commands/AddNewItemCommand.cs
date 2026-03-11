@@ -8,7 +8,7 @@ using WarehouseManager.WarehouseFolder;
 
 namespace WarehouseManager.Commands
 {
-    internal class AddNewItemCommand : IUndoCommand
+    public class AddNewItemCommand : IUndoCommand
     {
         [Option('n', "name", Required = true, HelpText = "Name of the product.")]
         public string ? Name { get; set; }
@@ -31,6 +31,7 @@ namespace WarehouseManager.Commands
                 {
                     foreach (var trait in opts.Traits)
                     {
+                        
                         if (Enum.TryParse<ItemProperty>(trait, ignoreCase: true, out ItemProperty result))
                         {
                             itemProperties.Add(result);

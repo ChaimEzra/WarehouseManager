@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WarehouseManager.WarehouseFolder
 {
-    internal enum ItemProperty
+    public enum ItemProperty
     {
         Edible,
         Needscooling,

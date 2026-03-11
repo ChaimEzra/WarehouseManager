@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,11 +11,23 @@ namespace WarehouseManager.InputTyps
 
         public InputByFile(string path)
         {
-            reader = new StreamReader(path);
+            try
+            {
+                reader = new StreamReader(path);
+            }
+            catch (Exception)
+            {
+                string message = $"Failed to open file at path: {path}.";
+                Log.Warning(message);
+                reader = null;
+            }
         }
-
         public string GetInputString()
         {
+            if (reader is null)
+            {
+                return null;
+            }
             if (reader.EndOfStream)
             {
                 reader.Close();
@@ -23,6 +36,6 @@ namespace WarehouseManager.InputTyps
 
             return reader.ReadLine();
         }
-   
+
     }
 }

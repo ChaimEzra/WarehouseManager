@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../WarehouseManager.Test/WarehouseManager.Test.csproj" Id="050c2e63-0902-45c6-b861-f30a0fd22519" />
   <Project Path="WarehouseManager.csproj" />
 </Solution>

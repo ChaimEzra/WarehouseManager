@@ -18,7 +18,7 @@ namespace WarehouseManager.Commands
             Console.WriteLine("AddItem -n <Name> -p <Price> -t <Edible,Needscooling,Fragile>");
             Console.WriteLine("    Adds a new item to the warehouse.");
             Console.WriteLine("    Example: AddItem -n Apple -p 5.5 -t Fragile,Needscooling\n");
-        
+
             Console.WriteLine("AddStock -i <ItemId> -q <Quantity>");
             Console.WriteLine("    Increases stock of an existing item.");
             Console.WriteLine("    Example: AddStock -i 1 -q 20\n");
@@ -33,8 +33,9 @@ namespace WarehouseManager.Commands
             Console.WriteLine("List");
             Console.WriteLine("    Displays all items in the warehouse.\n");
 
-            Console.WriteLine("Link -f <FilePath>");
-            Console.WriteLine("    Loads Commands data from file.\n");
+            Console.WriteLine("Link -p <FullFilePath>");
+            Console.WriteLine("    Loads Commands data from file.");
+            Console.WriteLine("    Example: Link -p C:/../...../fileName.txt\n");
 
             Console.WriteLine("Query Select Avg(price)/Sum(price)/Name Where [Condition] (Optional query) Orderby prop Descending/Ascending");
             Console.WriteLine("Condition => price >= 20 && Fragile || Heavy ....");

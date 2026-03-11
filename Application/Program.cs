@@ -8,21 +8,16 @@ namespace WarehouseManager.Application
         public static void Main(string[] args)
         {
             EventMessageService eventMessageService = new EventMessageService(Warehouse.GetWarehouse());
-            var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    .Build();
+
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
+                .ReadFrom.Configuration(WarehousSettings.Configuration)
                 .CreateLogger();
 
-            
             try
             {
                 Log.Information("Starting application");
                 var app = new App();
-                app.ShowWelcome();
                 app.Run();
 
             }
@@ -35,14 +30,6 @@ namespace WarehouseManager.Application
                 Log.CloseAndFlush();
             }
         }
-        //public static void Main(string[] args)
-        //{
-        //    while (true)
-        //    {
-        //        int choice = int.Parse(Console.ReadLine());
-        //        int n =  WarehousSettings.LoadThreshold();
-        //        Console.WriteLine($"You choice {choice} + trashholde {n} = {choice + n}");
-        //    }
-        //}
+
     }
 }

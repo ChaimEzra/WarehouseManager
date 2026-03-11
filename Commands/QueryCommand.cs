@@ -14,6 +14,7 @@ namespace WarehouseManager.Commands
             string query = string.Join(" ", args);
             QueryParser parser = new QueryParser();
             Query q = parser.Parse(query);
+
             try
             {
 

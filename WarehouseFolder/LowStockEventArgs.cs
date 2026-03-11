@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WarehouseManager.WarehouseFolder
 {
-    internal class LowStockEventArgs : EventArgs
+    public class LowStockEventArgs : EventArgs
     {
         public Item Item { get; }
         public int Quantity { get; }

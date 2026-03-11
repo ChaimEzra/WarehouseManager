@@ -7,28 +7,38 @@ using WarehouseManager.Application;
 
 namespace WarehouseManager.WarehouseFolder
 {
-    internal class Warehouse
+    public class Warehouse
     {
-        private static Warehouse warehouse;
-        public event EventHandler<LowStockEventArgs>? LowStock;
-        public Dictionary<Item, int> ItemsInWarehouse { get; private set; }
+        //private static Warehouse warehouse;
+        public static Warehouse Instance { get; }
+        public event EventHandler<LowStockEventArgs> LowStock;
+        public Dictionary<Item, int> ItemsInWarehouse { get; set; }
 
         private Warehouse()
         {
             ItemsInWarehouse = new Dictionary<Item, int>();
+            LowStock = delegate { };
         }
+        static Warehouse()
+        {
+            Instance = new Warehouse();
+        }
+        //public static Warehouse GetWarehouse()
+        //{
+        //    if (Instance is null)
+        //    {
+        //        Instance = new Warehouse();
+        //    }
+        //    return Instance;
+        //}
         public static Warehouse GetWarehouse()
         {
-            if (warehouse is null)
-            {
-                warehouse = new Warehouse();
-            }
-            return warehouse;
+            return Instance;
         }
 
         public void AddnewItem(Item item)
         {
-            ItemsInWarehouse.Add(item, WarehousSettings.LoadThreshold());
+            ItemsInWarehouse.Add(item, WarehousSettings.Threshold);
             UpdateQuantity(item.Id);
         }
         public void RemoveItem(int id)
@@ -44,10 +54,10 @@ namespace WarehouseManager.WarehouseFolder
         public void AddStock(int id, int quantity)
         {
             var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
-            if ( item != null )
+            if (item != null)
             {
                 this.ItemsInWarehouse[item] += quantity;
-                Log.Information($"The quantity {quantity} was successfuly added to item id {id}");
+                Log.Information($"The quantity {quantity} was successfully added to item id {id}");
                 UpdateQuantity(item.Id);
             }
             else
@@ -59,15 +69,15 @@ namespace WarehouseManager.WarehouseFolder
         public void RemoveStock(int id, int quantity)
         {
             var item = this.ItemsInWarehouse.Keys.FirstOrDefault(itemId => itemId.Id == id);
-            if (item != null)
+            if (item is not null)
             {
-                if(quantity > this.ItemsInWarehouse[item])
+                if (quantity > this.ItemsInWarehouse[item])
                 {
-                    Log.Error($"Not enough stock for item id {id}. Current quantity: {this.ItemsInWarehouse[item]}");
+                    Log.Error($"Not enough stock for item id {id}. Current quantity: {ItemsInWarehouse[item]}");
                     return;
                 }
                 this.ItemsInWarehouse[item] -= quantity;
-                Log.Information($"The quantity {quantity} was successfuly removed from item id {id}");
+                Log.Information($"The quantity {quantity} was successfully removed from item id {id}");
                 UpdateQuantity(item.Id);
             }
             else
@@ -83,12 +93,13 @@ namespace WarehouseManager.WarehouseFolder
             {
                 foreach (var item in this.ItemsInWarehouse)
                 {
-                    Console.WriteLine($"[Item: {item.Key} - Quantity: {item.Value}]");
+
+                    Console.WriteLine($"[Item: {item.Key} Quantity: {item.Value}]");
                 }
             }
             else
             {
-                Log.Warning("Wharehouse empty.");
+                Log.Warning("Warehouse empty.");
             }
         }
 
@@ -96,14 +107,14 @@ namespace WarehouseManager.WarehouseFolder
         {
             var item = ItemsInWarehouse.Select(i => i.Key).FirstOrDefault(i => i.Id == id);
 
-            if(item is null)
+            if (item is null)
             {
                 return;
             }
 
             int newQuantity = ItemsInWarehouse[item];
 
-            int threshold = WarehousSettings.LoadThreshold();
+            int threshold = WarehousSettings.Threshold;
 
             bool isBelow = newQuantity < threshold;
 
@@ -115,6 +126,7 @@ namespace WarehouseManager.WarehouseFolder
 
         protected virtual void OnLowStock(Item item, int quantity, int threshold)
         {
+
             LowStock?.Invoke(this, new LowStockEventArgs(item, quantity, threshold));
         }
     }

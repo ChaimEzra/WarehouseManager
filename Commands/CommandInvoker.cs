@@ -5,8 +5,12 @@ using System.Text;
 
 namespace WarehouseManager.Commands
 {
-    internal class UndoCommandInvoker
+    internal class CommandInvoker
     {
+        //public void Execute(INotUndoCommand notUndoCommand, string[] args) 
+        //{
+        //    notUndoCommand.Execute(args);
+        //}
         private Stack<IUndoCommand> UndoCommands = new Stack<IUndoCommand>();
         public void Execute(IUndoCommand undoCommand, string[] args)
         {

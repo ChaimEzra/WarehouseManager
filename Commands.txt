@@ -1,13 +1,14 @@
 additem -n a -p 90
-additem -n b -p 90
-additem -n c -p 90
+additem -n a -p 90
+addstock -i 2 -q 4000
+additem -n c -p 5
 additem -n d -p 90
 additem -n e -p 90
 additem -n f -p 90
 additem -n g -p 90
 additem -n h -p 90
-link -p C:\Users\chaim\Desktop\C#\WarehouseManager\Commands2.txt
-additem -n m p 90
+link -p C:\Users\chaim\Desktop\C#\WarehouseManager\Comman2.txt
+additem -n m -p 90
 additem -n o -p 8
 
 

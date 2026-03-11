@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WarehouseManager.WarehouseFolder
 {
-    internal class Item
+    public class Item
     {
         private static int CounterId { get; set; } = 0;
         public int Id { get; }
@@ -18,13 +18,13 @@ namespace WarehouseManager.WarehouseFolder
             this.Price = Price;
             this.Properties = Properties;
         }
-        public bool HasProperty(ItemProperty prop)
-        {
-            return this.Properties.Contains(prop);
-        }
+        //private bool HasProperty(ItemProperty prop)
+        //{
+        //    return this.Properties.Contains(prop);
+        //}
         public override string ToString()
         {
-            return $"<Id: {this.Id}, Name: {this.Name}, Price: {this.Price}, Properties: {string.Join(", ", this.Properties)}>";
+            return $"<Id: {this.Id}, Name: {this.Name}, Price: {this.Price}, Properties: {string.Join(", ", Properties)}>";
         }
     }
 }

@@ -7,8 +7,8 @@ namespace WarehouseManager.Commands
 {
     internal class UndoCommand : INotUndoCommand
     {
-        private UndoCommandInvoker UndoCommandInvoker;
-        public UndoCommand(UndoCommandInvoker undoCommandInvoker)
+        private CommandInvoker UndoCommandInvoker;
+        public UndoCommand(CommandInvoker undoCommandInvoker)
         {
             this.UndoCommandInvoker = undoCommandInvoker;
         }
@@ -16,7 +16,7 @@ namespace WarehouseManager.Commands
         {
             Log.Information("Undoing last command.");
             this.UndoCommandInvoker.Undo();
-            
+
         }
     }
 }

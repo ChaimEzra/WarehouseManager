@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WarehouseManager.Commands;
 using WarehouseManager.InputTyps;
+using WarehouseManager.WarehouseFolder;
 
 namespace WarehouseManager.Application
 {
@@ -12,8 +13,9 @@ namespace WarehouseManager.Application
         public void Run()
         {
             InputStringProvider inputStringProvider = new InputStringProvider();
-            UndoCommandInvoker undoCommandInvoker = new UndoCommandInvoker();
-            NotUndoCommandInvoker notUndoCommandInvoker = new NotUndoCommandInvoker();
+            //UndoCommandInvoker undoCommandInvoker = new UndoCommandInvoker();
+            CommandInvoker CommandInvoker = new CommandInvoker();
+            ShowWelcome();
 
             while (true)
             {
@@ -25,31 +27,31 @@ namespace WarehouseManager.Application
                 switch (inputToComper)
                 {
                     case "additem":
-                        undoCommandInvoker.Execute(new AddNewItemCommand(), args);
+                        CommandInvoker.Execute(new AddNewItemCommand(), args);
                         break;
                     case "addstock":
-                        undoCommandInvoker.Execute(new AddStockCommand(), args);
+                        CommandInvoker.Execute(new AddStockCommand(), args);
                         break;
                     case "removestock":
-                        undoCommandInvoker.Execute(new RemoveStockCommand(), args);
+                        CommandInvoker.Execute(new RemoveStockCommand(), args);
                         break;
                     case "undo":
-                        notUndoCommandInvoker.Execute(new UndoCommand(undoCommandInvoker), args);
+                        CommandInvoker.Execute(new UndoCommand(CommandInvoker), args);
                         break;
                     case "link":
-                        notUndoCommandInvoker.Execute(new LinkToFileCommand(inputStringProvider), args);
+                        CommandInvoker.Execute(new LinkToFileCommand(inputStringProvider), args);
                         break;
                     case "list":
-                        notUndoCommandInvoker.Execute(new ListWarehouseCommand(), args);
+                        CommandInvoker.Execute(new ListWarehouseCommand(), args);
                         break;
                     case "query":
-                        notUndoCommandInvoker.Execute(new QueryCommand(), args);
+                        CommandInvoker.Execute(new QueryCommand(), args);
                         break;
                     case "help":
-                        notUndoCommandInvoker.Execute(new HelpCommand(), args);
+                        CommandInvoker.Execute(new HelpCommand(), args);
                         break;
                     case "exit":
-                        notUndoCommandInvoker.Execute(new ExitCommand(), args);
+                        CommandInvoker.Execute(new ExitCommand(), args);
                         Log.Information("Exiting application.");
                         return;
                     default:
@@ -59,7 +61,7 @@ namespace WarehouseManager.Application
 
             }
         }
-        public void ShowWelcome()
+        private static void ShowWelcome()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("======================================");

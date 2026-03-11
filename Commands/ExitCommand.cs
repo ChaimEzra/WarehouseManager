@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace WarehouseManager.Commands
     {
         public void Execute(string[] args)
         {
-            throw new NotImplementedException();
+            //Log.Information("Exiting program.");
         }
     }
 }
